@@ -17,7 +17,7 @@ module.exports = {
           });
         let Genre = mongoose.model('Genre', genreSchema);
         let promises = data.map(item => {
-            return Genre.create(item);
+            return Genre.findOneAndUpdate(item.query, {id: item.id, name: item.name}, {'upsert': true}).exec();
         }) 
         Promise.all(promises)
             .then(data => {
