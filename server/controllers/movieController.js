@@ -5,7 +5,10 @@ const apiHelpers = require('../helpers/apiHelpers.js');
 module.exports = {
   getSearch: (req, res) => {
     // get the search genre     
-
+    console.log("get search");
+    movieModel.getSearch(req);
+    res.statusCode = 200;
+    res.send();
     // https://www.themoviedb.org/account/signup
     // get your API KEY
 
@@ -17,9 +20,13 @@ module.exports = {
   },
   getGenres: (req, res) => {
     // make an axios request to get the list of official genres
-    
+    console.log("get genres");
     // use this endpoint, which will also require your API key: https://api.themoviedb.org/3/genre/movie/list
-    
+    apiHelpers.genres(req, (data) => {
+      movieModel.getGenres(data);
+    });
+    res.statusCode = 200;
+    res.send();
     // send back
   },
   saveMovie: (req, res) => {
