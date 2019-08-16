@@ -10,7 +10,7 @@ module.exports = {
     getSearch: (data) => {
         console.log("get search down heeeeere");
     },
-    getGenres: (data) => {
+    getGenres: (data, callback) => {
         let genreSchema = mongoose.Schema({
             id: Number,
             name: String
@@ -21,11 +21,15 @@ module.exports = {
         }) 
         Promise.all(promises)
             .then(data => {
-                //console.log(data)
+                let newData = data.map(item => {
+                    return {id: item.id, name: item.name};
+                });
+                callback(null, newData);
             })
             .catch(err => {
                 if(err) {
                     console.log("error! didn't correctly send data to database");
+                    callback(err);
                 }
             })
     },

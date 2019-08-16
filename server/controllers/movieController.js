@@ -23,10 +23,18 @@ module.exports = {
     console.log("get genres");
     // use this endpoint, which will also require your API key: https://api.themoviedb.org/3/genre/movie/list
     apiHelpers.genres(req, (data) => {
-      movieModel.getGenres(data);
+      movieModel.getGenres(data, (err, genres) => {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(genres);
+          res.statusCode = 200;
+          res.send(genres);
+        }
+      });
     });
-    res.statusCode = 200;
-    res.send();
+    //res.statusCode = 200;
+    //res.send();
     // send back
   },
   saveMovie: (req, res) => {
