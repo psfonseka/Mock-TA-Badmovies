@@ -5,8 +5,12 @@ class Search extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      genres: []
+      genres: [],
+      option: ""
     };
+
+    this.handleOption = this.handleOption.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   componentDidMount() {
     this.getGenres();
@@ -20,9 +24,21 @@ class Search extends React.Component {
       const uniq = new Set(results.map(e => JSON.stringify(e)));
       const res = Array.from(uniq).map(e => JSON.parse(e));
       this.setState({
-        genres: res
+        genres: res,
+        option: res[0].id
       });
     });
+  }
+
+  handleOption(event) {
+    this.setState({
+      option: event.target.value
+    });
+    console.log(event.target.value);
+  }
+
+  handleSearch(option) {
+    this.props.onSearch(this.state.option);
   }
 
   render() {
@@ -34,7 +50,7 @@ class Search extends React.Component {
         {/* Make the select options dynamic from genres !!! */}
         {/* How can you tell which option has been selected from here? */}
 
-        <select>
+        <select onChange={this.handleOption} value={this.state.option}>
           {this.state.genres.map((genre) => {
             return <option key={genre.id} value={genre.id}>{genre.name}</option>
           })}
@@ -44,7 +60,7 @@ class Search extends React.Component {
         </select>
         <br/><br/>
 
-        <button>Search</button>
+        <button onClick={this.handleSearch}>Search</button>
 
       </div>
     );

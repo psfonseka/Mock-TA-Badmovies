@@ -23,7 +23,8 @@ module.exports = {
         })
     },
     movies: (req, callback) => {
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&vote_count.gte=10&with_genres=10752`)
+        let selected = req.query.genre;
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&vote_count.gte=10&with_genres=${selected}`)
         .then(data => {
             //console.log(data.data);
             callback(data.data.results);

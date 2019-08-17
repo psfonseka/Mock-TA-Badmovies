@@ -15,14 +15,22 @@ class App extends React.Component {
     };
     
     // you might have to do something important here!
+    this.getMovies = this.getMovies.bind(this);
   }
   componentDidMount() {
     this.getMovies();
   }
 
-  getMovies() {
+  getMovies(genre) {
     // make an axios request to your server on the GET SEARCH endpoint
-    axios.get('/movies/search')
+    if(genre === undefined) {
+      genre = 10752;
+    }
+    //console.log(genre);
+    axios.get('/movies/search', {
+      params: {
+        genre: genre
+      }})
     .then(data => {
       this.setState({
         movies: data.data
@@ -51,7 +59,7 @@ class App extends React.Component {
         <header className="navbar"><h1>Bad Movies</h1></header> 
         
         <div className="main">
-          <Search swapFavorites={this.swapFavorites} showFaves={this.state.showFaves}/>
+          <Search swapFavorites={this.swapFavorites} showFaves={this.state.showFaves} onSearch={this.getMovies}/>
           <Movies movies={this.state.showFaves ? this.state.favorites : this.state.movies} showFaves={this.state.showFaves}/>
         </div>
       </div>

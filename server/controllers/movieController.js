@@ -8,7 +8,7 @@ module.exports = {
     console.log("get search");
     //movieModel.getSearch(req);
     apiHelpers.movies(req, (data) => {
-      movieModel.getSearch(data, (err, genres) => {
+      movieModel.getSearch(data, req.query.genre, (err, genres) => {
         res.statusCode = 200;
         res.send(genres);
       });

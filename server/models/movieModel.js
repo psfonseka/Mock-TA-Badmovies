@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 
 module.exports = {
-    getSearch: (data, callback) => {
+    getSearch: (data, genre, callback) => {
         console.log("get search down heeeeere");
         let info = data.map((item) => {
             return {mID: item.id, mRating: item.vote_average, mName: item.title, mGenre: item.genre_ids[0], mIMG: item.poster_path, mDate: item.release_date.slice(0,4)};
@@ -20,7 +20,7 @@ module.exports = {
                     console.log(error);
                 } else {
                     if (results.length >= 1) {
-                        console.log(results);
+                        //console.log(results);
                     } else {
                         sqlDb.query('INSERT INTO movielist SET ?', info[i], function (error, results, fields) {
                             if (error) {
@@ -32,7 +32,7 @@ module.exports = {
                     
                 }
                 if (i === info.length-1) {
-                    sqlDb.query('SELECT * FROM movielist', function (error, results, fields) {
+                    sqlDb.query('SELECT * FROM movielist WHERE mGenre = ?', genre, function (error, results, fields) {
                         if (error) {
                             console.log(error);
                         } else {
