@@ -6,9 +6,14 @@ module.exports = {
   getSearch: (req, res) => {
     // get the search genre     
     console.log("get search");
-    movieModel.getSearch(req);
-    res.statusCode = 200;
-    res.send();
+    //movieModel.getSearch(req);
+    apiHelpers.movies(req, (data) => {
+      movieModel.getSearch(data, (err, genres) => {
+
+      });
+      res.statusCode = 200;
+      res.send(data);
+    });
     // https://www.themoviedb.org/account/signup
     // get your API KEY
 

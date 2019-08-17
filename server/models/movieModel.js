@@ -7,8 +7,12 @@ const mongoose = require('mongoose');
 
 
 module.exports = {
-    getSearch: (data) => {
+    getSearch: (data, callback) => {
         console.log("get search down heeeeere");
+        let info = data.map((item) => {
+            return {id: item.id, avg: item.vote_average, name: item.title, genre: item.genre_ids[0], img: item.poster_path, year: item.release_date.slice(0,4)};
+        });
+        console.log(info);
     },
     getGenres: (data, callback) => {
         let genreSchema = mongoose.Schema({

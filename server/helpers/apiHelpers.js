@@ -18,15 +18,20 @@ module.exports = {
         })
         .catch(err => {
             if(err) {
-                console.log("ERROR! generes");
+                console.log("ERROR! genres");
             }
         })
     },
     movies: (req, callback) => {
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&with_genres=10752`)
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&vote_count.gte=10&with_genres=10752`)
         .then(data => {
-            //console.log(data);
-            callback(data.data);
+            //console.log(data.data);
+            callback(data.data.results);
+        })
+        .catch(err => {
+            if(err) {
+                console.log("ERROR! search");
+            }
         })
     }
 }

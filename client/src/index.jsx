@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
 // import AnyComponent from './components/filename.jsx'
 import Search from './components/Search.jsx'
 import Movies from './components/Movies.jsx'
+const axios = require('axios');
 
 class App extends React.Component {
   constructor(props) {
@@ -16,9 +16,16 @@ class App extends React.Component {
     
     // you might have to do something important here!
   }
+  componentDidMount() {
+    this.getMovies();
+  }
 
   getMovies() {
     // make an axios request to your server on the GET SEARCH endpoint
+    axios.get('/movies/search')
+    .then(data => {
+      console.log(data.data);
+    });
   }
 
   saveMovie() {
