@@ -17,8 +17,10 @@ class Search extends React.Component {
     axios.get('/movies/genres')
     .then(data => {
       let results = data.data;
+      const uniq = new Set(results.map(e => JSON.stringify(e)));
+      const res = Array.from(uniq).map(e => JSON.parse(e));
       this.setState({
-        genres: results
+        genres: res
       });
     });
   }
@@ -34,7 +36,7 @@ class Search extends React.Component {
 
         <select>
           {this.state.genres.map((genre) => {
-            return <option key={genre.id} value={genre.name}>{genre.name}</option>
+            return <option key={genre.id} value={genre.id}>{genre.name}</option>
           })}
           {/* <option value="theway">The Way</option>
           <option value="thisway">This Way</option>

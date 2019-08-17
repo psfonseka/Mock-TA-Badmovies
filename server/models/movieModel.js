@@ -20,11 +20,17 @@ module.exports = {
             return Genre.findOneAndUpdate(item.query, {id: item.id, name: item.name}, {'upsert': true}).exec();
         }) 
         Promise.all(promises)
-            .then(data => {
-                let newData = data.map(item => {
-                    return {id: item.id, name: item.name};
-                });
-                callback(null, newData);
+            .then(() => {
+                // let newData = data.map(item => {
+                //     return {id: item.id, name: item.name};
+                // });
+                let findAll = Genre.find({}).exec();
+                findAll.then((ndata) => {
+                    let finalData = ndata.map(item => {
+                        return {id: item.id, name: item.name};
+                    });
+                    callback(null, finalData.slice(0,19));
+                })
             })
             .catch(err => {
                 if(err) {

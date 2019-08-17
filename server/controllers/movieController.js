@@ -27,7 +27,7 @@ module.exports = {
         if(err) {
           console.log(err);
         } else {
-          console.log(genres);
+          //console.log(genres);
           res.statusCode = 200;
           res.send(genres);
         }
