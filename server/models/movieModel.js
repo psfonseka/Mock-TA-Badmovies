@@ -10,9 +10,38 @@ module.exports = {
     getSearch: (data, callback) => {
         console.log("get search down heeeeere");
         let info = data.map((item) => {
-            return {id: item.id, avg: item.vote_average, name: item.title, genre: item.genre_ids[0], img: item.poster_path, year: item.release_date.slice(0,4)};
+            return {mID: item.id, mRating: item.vote_average, mName: item.title, mGenre: item.genre_ids[0], mIMG: item.poster_path, mDate: item.release_date.slice(0,4)};
         });
-        console.log(info);
+        for (let i = 0; i < info.length; i++) {
+            //sqlDb.query()
+            let id = info[i].mID;
+            sqlDb.query('SELECT * FROM movielist WHERE mID = ?', id, function (error, results, fields) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    if (results.length >= 1) {
+                        console.log(results);
+                    } else {
+                        sqlDb.query('INSERT INTO movielist SET ?', info[i], function (error, results, fields) {
+                            if (error) {
+                                console.log(error);
+                            }
+                            // Neat!
+                        });
+                    }
+                    
+                }
+                if (i === info.length-1) {
+                    sqlDb.query('SELECT * FROM movielist', function (error, results, fields) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            callback(null, results);
+                        }
+                    })
+                }
+            });
+        }
     },
     getGenres: (data, callback) => {
         let genreSchema = mongoose.Schema({

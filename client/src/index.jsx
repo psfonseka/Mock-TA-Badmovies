@@ -24,7 +24,9 @@ class App extends React.Component {
     // make an axios request to your server on the GET SEARCH endpoint
     axios.get('/movies/search')
     .then(data => {
-      console.log(data.data);
+      this.setState({
+        movies: data.data
+      });
     });
   }
 

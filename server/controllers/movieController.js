@@ -9,10 +9,9 @@ module.exports = {
     //movieModel.getSearch(req);
     apiHelpers.movies(req, (data) => {
       movieModel.getSearch(data, (err, genres) => {
-
+        res.statusCode = 200;
+        res.send(genres);
       });
-      res.statusCode = 200;
-      res.send(data);
     });
     // https://www.themoviedb.org/account/signup
     // get your API KEY
