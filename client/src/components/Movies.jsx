@@ -23,7 +23,7 @@ class Movies extends React.Component {
               <section className="movie_details">
                 <div className="movie_year">
                   <span className="title">Year</span>
-                  <span>{item.mName}</span>
+                  <span>{item.mDate}</span>
                 </div>
                 <div className="movie_rating">
                   <span className="title">Rating</span>
